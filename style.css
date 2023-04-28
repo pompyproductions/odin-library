@@ -85,6 +85,7 @@ body {
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: min-content 1fr min-content;
+	overflow: hidden;
 }
 
 header {
@@ -107,19 +108,45 @@ header {
 
 /* elements */
 
+.add-button {
+	display: grid;
+	place-items: center;
+	color: var(--black);
+	transition: all .3s;
+}
+
 button.flat {
 	background: none;
 	border: none;
-	color: var(--melon);
+	color: inherit;
 	font-family: inherit;
 	font-size: 2rem;
 	cursor: pointer;
 	transition: transform 0.15s;
-
-	display: grid;
-	place-items: center;
+	z-index: 20;
 }
 
 button.flat:hover {
 	transform: scale(1.2);
+}
+
+.add-button > .mask {
+	width: 2px;
+	height: 2px;
+	position: absolute;
+	border-radius: 50%;
+	transition: all .3s;
+	z-index: 10;
+}
+
+.add-button.active {
+	color: var(--white);
+	transform: rotate(45deg);
+}
+
+.add-button.active > .mask {
+	background-color: var(--melon);
+	width: 300vmax;
+	height: 300vmax;
+	/* transform: scale(1000); */
 }
