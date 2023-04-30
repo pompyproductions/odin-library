@@ -2,6 +2,7 @@ const maskElement = document.querySelector(".mask");
 const clipElement = document.querySelector(".clip");
 const contentElement = document.querySelector(".content");
 const addButton = document.querySelector("#add-button");
+const submitButton = document.querySelector(".submit");
 let isMaskActive = true;
 
 function handleButtonClick() {

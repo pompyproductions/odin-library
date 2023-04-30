@@ -22,8 +22,27 @@
     <main>
         <div class="mask"></div>
         <div class="clip">
-            <form class="content" action="">
+            <form class="clipped" action="">
                 <h2>Add new entry</h2>
+                <fieldset>
+                    <div class="input-pair">
+                        <label for="title">Anime title:</label>
+                        <input type="text" name="title" id="title">
+                    </div>
+                    <div class="input-pair">
+                        <label for="year">Year:</label>
+                        <input type="number" name="year" id="year">
+                    </div>
+                    <div class="input-pair">
+                        <label for="studio">Studio:</label>
+                        <input type="text" name="studio" id="studio">
+                    </div>
+                    <div class="vsep"></div>
+                </fieldset>
+                <div class="form-footer">
+                    <p class="alert">Anime with same title already exists.</p>
+                    <button class="submit" type="button">Submit</button>
+                </div>
             </form>
         </div>
     </main>

@@ -16,7 +16,7 @@ del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
+fieldset, form, label, legend, input
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed, 
 figure, figcaption, footer, header, hgroup, 
@@ -60,6 +60,11 @@ table {
     --melon: #e0afa0;
     --white: #f4f3ee;
 
+	--light-blue: #6f90be;
+	--dark-blue: #2e466e;
+	--red: #a70f1e;
+	--dark-red: #980615;
+
 	--doc-height: 100vh; /* change in code */
 	--padding: 1rem;
 }
@@ -72,14 +77,19 @@ body {
 }
 
 h1 {
-	font-size: 2rem;
+	font-size: 1.8rem;
 	font-weight: 500;
 }
 
 h2 {
-	font-size: 2rem;
+	font-size: 1.8rem;
 	font-weight: 500;
 	/* padding-top: var(--padding) */
+}
+
+::selection {
+	background-color: var(--light-blue);
+	color: var(--white);
 }
 
 
@@ -90,7 +100,7 @@ body {
 	/* padding: var(--padding); */
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: min-content 1fr min-content;
+	grid-template-rows: 5rem 1fr 5rem;
 	overflow: hidden;
 }
 
@@ -105,6 +115,10 @@ header {
 	padding: var(--padding);
 }
 
+footer {
+	/* background-color: var(--gray); */
+}
+
 .hline {
 	min-height: 3px;
 	max-height: 3px;
@@ -112,21 +126,102 @@ header {
 	background-color: currentColor;
 }
 
-form {
-	position: absolute;
-	inset: var(--padding);
+form.clipped {
+	position: fixed;
+	inset: 0;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 5rem 1fr 5rem;
+	align-items: center;
+}
+form h2 {
+	padding: var(--padding);
+}
+.form-footer {
+	background-color: var(--white);
+	align-self: stretch;
+	display: flex;
+	align-items: center;
+	padding: 0 var(--padding);
+}
+
+.form-footer button.submit {
+	background: none;
+	color: var(--black);
+	/* border: 1px solid currentColor; */
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+
+	border-radius: 0.5rem;
+	transition: background-color .2s, transform .2s;
+	cursor: pointer;
+	flex: 0 0 auto;
+	padding: .6rem 2rem;
+}
+.form-footer button.submit:hover {
+	background-color: var(--light-blue);
+	color: var(--white);
+	border: none;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.form-footer button.submit:active {
+	transform: translateY(2px);
+}
+.form-footer p.alert {
+	flex: 1 0 auto;
+	color: var(--dark-red);
+}
+
+fieldset {
 	/* background-color: var(--white); */
-	transition: all .4s;
-	/* pointer-events: all; */
-	opacity: 1;
-	z-index: 15;
+	height: 100%;
+	padding: 0 var(--padding);
+	display: grid;
+	gap: 1rem;
+	grid-auto-rows: min-content;
+	grid-template-columns: repeat(2, 1fr);
+}
+fieldset > .input-pair {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+}
+fieldset > .vsep {
+	flex-grow: 1;
+}
+input {
+	border: none;
+	padding: 0.6rem 1.2rem;
+	font-family: inherit;
+	background-color: var(--white);
+	border-radius: 0.5rem;
+}
+input#title {
+	font-size: 2rem;
+}
+.input-pair:first-of-type {
+	grid-column: 1 / span 2;
 }
 
-form.hidden {
-	opacity: 0;
-	pointer-events: none;
+.button-pair {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	align-items: center;
+	margin-top: 1rem;
+	justify-self: flex-end;
 }
-
+button.submit {
+	background-color: var(--white);
+	border: none;
+	padding: 0.5rem 2rem;
+	font: inherit;
+}
+.button-pair > .alert {
+	flex: 1 1 auto;
+	color: var(--dark-red);
+	font-weight: 400;
+	white-space: normal;
+}
 /* elements */
 
 .mask, .clip {
@@ -165,7 +260,7 @@ button.flat {
 	border: none;
 	color: inherit;
 	font-family: inherit;
-	font-size: 2rem;
+	font-size: 1.8rem;
 	cursor: pointer;
 	transition: transform 0.15s;
 	z-index: 30;
