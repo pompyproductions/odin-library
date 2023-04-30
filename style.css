@@ -76,6 +76,12 @@ h1 {
 	font-weight: 500;
 }
 
+h2 {
+	font-size: 2rem;
+	font-weight: 500;
+	/* padding-top: var(--padding) */
+}
+
 
 
 /* page layout */
@@ -106,7 +112,46 @@ header {
 	background-color: currentColor;
 }
 
+form {
+	position: absolute;
+	inset: var(--padding);
+	/* background-color: var(--white); */
+	transition: all .4s;
+	/* pointer-events: all; */
+	opacity: 1;
+	z-index: 15;
+}
+
+form.hidden {
+	opacity: 0;
+	pointer-events: none;
+}
+
 /* elements */
+
+.mask, .clip {
+	position: absolute;
+	border-radius: 50%;
+	transition: all .3s;
+	/* z-index: 10; */
+}
+
+.mask {
+	background-color: var(--melon);
+}
+.clip {
+	background: none;
+	clip-path: inset(0 0 0 0 round 50%);
+}
+
+.content {
+	position: fixed;
+	inset: 0;
+	padding: var(--padding);
+	display: grid;
+	grid-template-rows: 1fr min-content;
+
+}
 
 .add-button {
 	display: grid;
@@ -123,30 +168,18 @@ button.flat {
 	font-size: 2rem;
 	cursor: pointer;
 	transition: transform 0.15s;
-	z-index: 20;
+	z-index: 30;
 }
 
 button.flat:hover {
 	transform: scale(1.2);
 }
 
-.add-button > .mask {
-	width: 2px;
-	height: 2px;
-	position: absolute;
-	border-radius: 50%;
-	transition: all .3s;
-	z-index: 10;
-}
-
-.add-button.active {
+#add-button.active {
 	color: var(--white);
 	transform: rotate(45deg);
 }
 
-.add-button.active > .mask {
-	background-color: var(--melon);
-	width: 300vmax;
-	height: 300vmax;
-	/* transform: scale(1000); */
+#add-button.active:hover {
+	transform: scale(1.2) rotate(45deg);
 }
