@@ -9,7 +9,7 @@ const form = {
     studio: document.querySelector("#studio"),
     alert: document.querySelector(".alert")
 }
-const table = document.querySelector("table");
+const table = document.querySelector("tbody");
 
 let isMaskActive = false;
 const entries = [

@@ -50,7 +50,6 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-	table-layout: fixed;
 }
 
 /* HTML variables & restyle */
@@ -127,6 +126,27 @@ footer {
 
 table {
 	width: 100%;
+	border-radius: 0.5rem;
+	overflow: hidden;
+}
+
+thead tr {
+	font-weight: 500;
+	font-size: 0.8em;
+}
+
+tbody tr {
+	border-bottom: 1px solid var(--light-gray);
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+tbody tr:hover {
+	background-color: var(--dark-blue);
+}
+
+td, th {
+	text-align: start;
+	padding: 0.8rem;
 }
 
 .hline {
