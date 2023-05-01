@@ -50,6 +50,7 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+	table-layout: fixed;
 }
 
 /* HTML variables & restyle */
@@ -67,6 +68,8 @@ table {
 
 	--doc-height: 100vh; /* change in code */
 	--padding: 1rem;
+
+	font-size: 16px;
 }
 
 body {
@@ -97,7 +100,6 @@ h2 {
 /* page layout */
 
 body {
-	/* padding: var(--padding); */
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: 5rem 1fr 5rem;
@@ -115,8 +117,16 @@ header {
 	padding: var(--padding);
 }
 
+main {
+	padding: var(--padding);
+}
+
 footer {
 	/* background-color: var(--gray); */
+}
+
+table {
+	width: 100%;
 }
 
 .hline {
@@ -167,7 +177,7 @@ form h2 {
 	transform: translateY(2px);
 }
 .form-footer p.alert {
-	flex: 1 0 auto;
+	flex: 1 1 auto;
 	color: var(--dark-red);
 }
 

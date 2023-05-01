@@ -3,13 +3,35 @@ const clipElement = document.querySelector(".clip");
 const contentElement = document.querySelector(".content");
 const addButton = document.querySelector("#add-button");
 const submitButton = document.querySelector(".submit");
-let isMaskActive = true;
+const form = {
+    title: document.querySelector("#title"),
+    year: document.querySelector("#year"),
+    studio: document.querySelector("#studio"),
+    alert: document.querySelector(".alert")
+}
+const table = document.querySelector("table");
 
-function handleButtonClick() {
-    toggleMask()
-    addButton.classList.toggle("active");
-    // maskElement.classList.toggle("active")
-    // document.querySelector("#new-entry").classList.toggle("hidden")
+let isMaskActive = false;
+const entries = [
+    new Anime("Attack on Titan", {
+        year: "2023",
+        studio: "Mappa"
+    }),
+    new Anime("Boku no Hero Academia", {
+        year: "2023",
+        studio: "Mappa"
+    }),
+];
+
+function Anime(title, optionalArgs = {}) {
+    this.title = title;
+    this.year = "";
+    this.studio = "";
+    for (arg in optionalArgs) {
+        if (["year", "studio"].includes(arg)) {
+            this[arg] = optionalArgs[arg]
+        }
+    }
 }
 
 function getCenterPos(elem) {
@@ -50,9 +72,52 @@ function calculateMask(elems) {
 
 function toggleMask() {
     isMaskActive = !isMaskActive;
+    addButton.classList.toggle("active");
     calculateMask([maskElement, clipElement]);
 }
 
-addButton.addEventListener("click", handleButtonClick);
+function formAlert(msg) {
+    form.alert.textContent = msg;
+}
+
+function onFormSubmit() {
+    if (!form.title.value) {
+        formAlert("Please enter a value for the title.");
+        return;
+    }
+    const entry = new Anime(form.title.value);
+    if (form.year.value) {
+        entry.year = form.year.value;
+    }
+    if (form.studio.value) {
+        entry.studio = form.studio.value;
+    }
+    console.log(entry);
+    appendToTable(entry);
+    toggleMask();
+}
+
+function appendToTable(item) {
+    const newRow = document.createElement("tr");
+
+    for (prop in item) {
+        const cell = document.createElement("td");
+        cell.textContent = item[prop];
+        newRow.appendChild(cell)
+    }
+
+    table.appendChild(newRow);
+}
+
+// function refreshTable() {
+
+// }
+
+addButton.addEventListener("click", toggleMask);
 window.addEventListener("resize", () => {calculateMask([maskElement, clipElement])});
-toggleMask();
+submitButton.addEventListener("click", onFormSubmit);
+calculateMask([maskElement, clipElement]);
+
+for (item of entries) {
+    appendToTable(item);
+}
