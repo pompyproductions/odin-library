@@ -59,6 +59,7 @@ table {
     --light-gray: #bcb8b1;
     --melon: #e0afa0;
     --white: #f4f3ee;
+	--yellow: #ebd057;
 
 	--light-blue: #6f90be;
 	--dark-blue: #2e466e;
@@ -101,7 +102,7 @@ h2 {
 body {
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 5rem 1fr 5rem;
+	grid-template-rows: 5rem 1fr minmax(5rem, min-content);
 	overflow: hidden;
 }
 
@@ -118,10 +119,40 @@ header {
 
 main {
 	padding: var(--padding);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 footer {
-	/* background-color: var(--gray); */
+	display: grid;
+	padding: var(--padding);
+	align-items: end;
+	justify-items: end;
+}
+
+.infos {
+	--elem-height: min-content;
+	display: grid;
+	gap: 0.2rem;
+	transform: translateY(var(--elem-height));
+	transition: transform 0.3s;
+}
+
+.infos > p {
+	font-style: italic;
+	font-weight: 300;
+	font-size: 0.8em;
+}
+
+footer.active {
+	background-color: var(--gray);
+	justify-items: start;
+}
+
+footer.active .title {
+	font-size: 1.2em;
+	font-weight: 400;
 }
 
 table {
@@ -278,26 +309,28 @@ button.submit {
 
 }
 
-.add-button {
-	display: grid;
-	place-items: center;
-	color: var(--black);
-	transition: all .3s;
-}
-
 button.flat {
 	background: none;
 	border: none;
 	color: inherit;
 	font-family: inherit;
-	font-size: 1.8rem;
 	cursor: pointer;
 	transition: transform 0.15s;
-	z-index: 30;
 }
 
 button.flat:hover {
 	transform: scale(1.2);
+}
+
+#add-button {
+	font-size: 1.8rem;
+	z-index: 30;
+}
+
+#delete-button {
+	color: var(--yellow);
+	border: 1px solid currentColor;
+	align-self: start;
 }
 
 #add-button.active {

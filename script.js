@@ -3,6 +3,7 @@ const clipElement = document.querySelector(".clip");
 const contentElement = document.querySelector(".content");
 const addButton = document.querySelector("#add-button");
 const submitButton = document.querySelector(".submit");
+const infosElement = document.querySelector(".infos");
 const form = {
     title: document.querySelector("#title"),
     year: document.querySelector("#year"),
@@ -23,6 +24,8 @@ const entries = [
     }),
 ];
 
+// object constructors
+
 function Anime(title, optionalArgs = {}) {
     this.title = title;
     this.year = "";
@@ -34,6 +37,8 @@ function Anime(title, optionalArgs = {}) {
     }
 }
 
+// helpers: calculation
+
 function getCenterPos(elem) {
     const clientRect = elem.getBoundingClientRect();
     return {
@@ -43,7 +48,6 @@ function getCenterPos(elem) {
 }
 
 function calculateMask(elems) {
-    // set for all elements (clip, mask)
     const coords = getCenterPos(addButton);
     const docDims = {
         height: document.documentElement.getBoundingClientRect().height,
@@ -70,6 +74,34 @@ function calculateMask(elems) {
     }
 }
 
+function calculateInfosHeight() {
+    return infosElement.getBoundingClientRect().height;
+}
+
+// helpers: DOM content
+
+function updateInfos(entry) {
+    infosElement.querySelector(".title").textContent = entry.title;
+    infosElement.querySelector(".studio").textContent = entry.studio;
+    infosElement.querySelector(".season").textContent = `${entry.year}${entry.season ? " " + entry.season : ""}`;
+    infosElement.querySelector(".status").textContent = entry.status ? `Status: ${entry.status}` : "No info on status";
+    infosElement.querySelector(".score").textContent = entry.score ? `Score: ${entry.score}/10` : "No score given";
+    infosElement.style.setProperty("--elem-height", calculateInfosHeight())
+}
+
+function appendToTable(item, id) {
+    const newRow = document.createElement("tr");
+    newRow.setAttribute("data-index", id.toString());
+    for (prop in item) {
+        const cell = document.createElement("td");
+        cell.textContent = item[prop];
+        newRow.appendChild(cell)
+    }
+    table.appendChild(newRow);
+}
+
+
+
 function toggleMask() {
     isMaskActive = !isMaskActive;
     addButton.classList.toggle("active");
@@ -80,7 +112,13 @@ function formAlert(msg) {
     form.alert.textContent = msg;
 }
 
-function onFormSubmit() {
+function displayInfos(id) {
+    updateInfos(entries[id]);
+}
+
+// event handlers
+
+function handleFormSubmit() {
     if (!form.title.value) {
         formAlert("Please enter a value for the title.");
         return;
@@ -92,32 +130,25 @@ function onFormSubmit() {
     if (form.studio.value) {
         entry.studio = form.studio.value;
     }
-    console.log(entry);
-    appendToTable(entry);
+    appendToTable(entry, entries.length);
+    entries.push(entry);
     toggleMask();
 }
 
-function appendToTable(item) {
-    const newRow = document.createElement("tr");
-
-    for (prop in item) {
-        const cell = document.createElement("td");
-        cell.textContent = item[prop];
-        newRow.appendChild(cell)
-    }
-
-    table.appendChild(newRow);
+function handleTableClick(e) {
+    const row = e.target.closest("tr");
+    if (!(row && row.getAttribute("data-index"))) return;
+    displayInfos(Number(row.getAttribute("data-index")));
 }
-
-// function refreshTable() {
-
-// }
 
 addButton.addEventListener("click", toggleMask);
 window.addEventListener("resize", () => {calculateMask([maskElement, clipElement])});
-submitButton.addEventListener("click", onFormSubmit);
+submitButton.addEventListener("click", handleFormSubmit);
+table.addEventListener("click", handleTableClick);
 calculateMask([maskElement, clipElement]);
 
-for (item of entries) {
-    appendToTable(item);
+
+for (let i = 0; i < entries.length; i++) {
+    appendToTable(entries[i], i);
 }
+displayInfos()
