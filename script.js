@@ -1,8 +1,12 @@
 const maskElement = document.querySelector(".mask");
 const clipElement = document.querySelector(".clip");
+
 const contentElement = document.querySelector(".content");
+
 const addButton = document.querySelector("#add-button");
 const submitButton = document.querySelector(".submit");
+const deleteButton = document.querySelector("#delete-button");
+
 const infosElement = document.querySelector(".infos");
 const form = {
     title: document.querySelector("#title"),
@@ -12,7 +16,9 @@ const form = {
 }
 const table = document.querySelector("tbody");
 
+let currentIndex = false;
 let isMaskActive = false;
+
 const entries = [
     new Anime("Attack on Titan", {
         year: "2023",
@@ -100,8 +106,6 @@ function appendToTable(item, id) {
     table.appendChild(newRow);
 }
 
-
-
 function toggleMask() {
     isMaskActive = !isMaskActive;
     addButton.classList.toggle("active");
@@ -114,6 +118,11 @@ function formAlert(msg) {
 
 function displayInfos(id) {
     updateInfos(entries[id]);
+}
+
+function removeFromTable(id) {
+    entries.splice(id, 1);
+    table.removeChild(table.children[id]);
 }
 
 // event handlers
@@ -138,10 +147,19 @@ function handleFormSubmit() {
 function handleTableClick(e) {
     const row = e.target.closest("tr");
     if (!(row && row.getAttribute("data-index"))) return;
+    selectedIndex = row.getAttribute("data-index");
     displayInfos(Number(row.getAttribute("data-index")));
 }
 
+function handleDeleteClick(e) {
+    if (selectedIndex) {
+        removeFromTable(selectedIndex);
+        selectedIndex = false;
+    }
+}
+
 addButton.addEventListener("click", toggleMask);
+deleteButton.addEventListener("click", handleDeleteClick);
 window.addEventListener("resize", () => {calculateMask([maskElement, clipElement])});
 submitButton.addEventListener("click", handleFormSubmit);
 table.addEventListener("click", handleTableClick);

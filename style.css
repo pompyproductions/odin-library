@@ -331,6 +331,7 @@ button.flat:hover {
 	color: var(--yellow);
 	border: 1px solid currentColor;
 	align-self: start;
+	transform-origin: center left;
 }
 
 #add-button.active {
